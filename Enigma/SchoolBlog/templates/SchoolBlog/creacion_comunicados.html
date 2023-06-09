@@ -1,0 +1,31 @@
+{% extends 'SchoolBlog/base.html' %}
+
+{% block content %}
+<body>
+    <div class="container mt-5">
+        <h1>{{ titulo }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título:</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" value="{{ comunicado.titulo }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="contenido" class="form-label">Contenido:</label>
+                <textarea class="form-control" id="contenido" name="contenido" rows="5" required>{{ comunicado.contenido }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría:</label>
+                <select class="form-select" id="categoria" name="categoria" required>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}" {% if categoria.id == comunicado.categoria.id %}selected{% endif %}>{{ categoria.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+{% endblock %}
